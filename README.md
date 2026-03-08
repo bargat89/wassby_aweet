@@ -1,2 +1,258 @@
-# wassby_aweet
-Postres artesanales que abrazan el corazón.
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wassby Sweet | Catálogo Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --pink-main: #db2777;
+            --pink-light: #fdf2f8;
+            --bg-body: #fffafb;
+            --text-dark: #1f2937;
+            --card-bg: #ffffff;
+        }
+
+        .dark-theme {
+            --bg-body: #111827;
+            --text-dark: #f9fafb;
+            --card-bg: #1f2937;
+            --pink-light: #371b2e;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .font-pacifico { font-family: 'Pacifico', cursive; }
+
+        .admin-sidebar {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+            z-index: 100;
+        }
+        .admin-sidebar.open { transform: translateX(0); }
+
+        .product-card {
+            background-color: var(--card-bg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(219, 39, 119, 0.1);
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(219, 39, 119, 0.1), 0 10px 10px -5px rgba(219, 39, 119, 0.04);
+        }
+
+        .logo-main {
+            border: 6px solid white;
+            box-shadow: 0 10px 20px rgba(219, 39, 119, 0.2);
+            transition: all 0.5s ease;
+        }
+        .logo-main:hover { transform: scale(1.05) rotate(3deg); }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--pink-light); }
+        ::-webkit-scrollbar-thumb { background: var(--pink-main); border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- BOTÓN DE AJUSTES -->
+    <button onclick="toggleAdmin()" class="fixed top-6 right-6 z-[110] bg-pink-600 text-white w-14 h-14 rounded-full shadow-lg hover:bg-pink-700 transition-all active:scale-90 flex items-center justify-center">
+        <i class="fa-solid fa-gear text-2xl animate-spin-slow"></i>
+    </button>
+
+    <!-- PANEL DE ADMINISTRACIÓN -->
+    <aside id="adminPanel" class="admin-sidebar fixed top-0 right-0 h-full w-full max-w-sm bg-white dark:bg-gray-800 shadow-2xl p-8 overflow-y-auto">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="font-pacifico text-3xl text-pink-600">Ajustes</h2>
+            <button onclick="toggleAdmin()" class="text-gray-400 hover:text-pink-600"><i class="fa-solid fa-xmark text-2xl"></i></button>
+        </div>
+
+        <!-- 1. CAMBIO DE TEMA -->
+        <div class="mb-10">
+            <h3 class="font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-circle-half-stroke"></i> Apariencia</h3>
+            <div class="flex items-center justify-between p-4 bg-pink-50 dark:bg-gray-700 rounded-2xl">
+                <span class="text-sm font-medium">Modo Oscuro</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="themeSwitch" class="sr-only peer" onchange="toggleTheme()">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+                </label>
+            </div>
+        </div>
+
+        <!-- 2. AGREGAR PRODUCTO -->
+        <div class="space-y-6">
+            <h3 class="font-bold flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up"></i> Publicar Nuevo</h3>
+            
+            <div class="space-y-4">
+                <input type="text" id="newTitle" placeholder="Nombre del Postre" class="w-full p-4 rounded-xl border border-pink-100 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-pink-500 outline-none">
+                <input type="text" id="newImg" placeholder="URL de la Imagen (Link)" class="w-full p-4 rounded-xl border border-pink-100 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-pink-500 outline-none">
+                <textarea id="newDesc" rows="3" placeholder="Descripción breve..." class="w-full p-4 rounded-xl border border-pink-100 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-pink-500 outline-none"></textarea>
+                
+                <div class="pt-4 border-t dark:border-gray-600">
+                    <p class="text-xs text-red-500 font-bold mb-2 uppercase">Verificación de Abigail</p>
+                    <input type="password" id="adminPass" placeholder="Ingresa la clave maestra" class="w-full p-4 rounded-xl border-2 border-pink-200 dark:border-gray-600 dark:bg-gray-700 focus:border-pink-500 outline-none">
+                </div>
+
+                <button onclick="publishProduct()" class="w-full bg-pink-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-pink-700 transition-transform active:scale-95">
+                    PUBLICAR AHORA
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <button onclick="resetToOriginal()" class="text-xs text-gray-400 hover:text-red-500">Restablecer catálogo de fábrica</button>
+        </div>
+    </aside>
+
+    <!-- HEADER / HERO -->
+    <header class="relative pt-16 pb-12 px-6 text-center">
+        <div class="logo-main inline-block w-44 h-44 rounded-full overflow-hidden mb-6 bg-white">
+            <!-- LOGO SOLICITADO -->
+            <img src="logo.jpeg" alt="Logo Wassby Sweet" class="w-full h-full object-cover">
+        </div>
+        <h1 class="font-pacifico text-6xl md:text-8xl text-pink-600 mb-2">Wassby Sweet</h1>
+        <p class="text-gray-500 dark:text-pink-200 text-lg md:text-2xl font-medium tracking-widest uppercase mb-10">Dulzura en cada bocado</p>
+
+        <!-- REDES SOCIALES -->
+        <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+            <a href="https://wa.me/50585140940" target="_blank" class="flex items-center gap-3 bg-green-500 text-white px-6 py-3 rounded-full hover:scale-105 transition shadow-md">
+                <i class="fa-brands fa-whatsapp text-xl"></i> <span class="font-bold">WhatsApp</span>
+            </a>
+            <a href="https://instagram.com/wassby_sweet" target="_blank" class="flex items-center gap-3 bg-gradient-to-tr from-yellow-500 via-red-500 to-purple-600 text-white px-6 py-3 rounded-full hover:scale-105 transition shadow-md">
+                <i class="fa-brands fa-instagram text-xl"></i> <span class="font-bold">Instagram</span>
+            </a>
+            <a href="https://tiktok.com/@wassby_sweet" target="_blank" class="flex items-center gap-3 bg-black text-white px-6 py-3 rounded-full hover:scale-105 transition shadow-md">
+                <i class="fa-brands fa-tiktok text-xl"></i> <span class="font-bold">TikTok</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- CATÁLOGO GRID -->
+    <main class="max-w-7xl mx-auto px-6 pb-24">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="catalogContent">
+            <!-- Los productos se inyectan aquí -->
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-pink-100 dark:border-gray-800 text-center">
+        <p class="font-pacifico text-2xl text-pink-500 mb-2">Wassby Sweet</p>
+        <p class="text-sm text-gray-400">© 2026 • Endulzando Nicaragua con amor</p>
+    </footer>
+
+    <script>
+        const KEY_MASTER = "07012009";
+        
+        // Base de datos de imágenes iniciales (Simulación de catálogo)
+        const initialData = [
+            { id: 1, title: "Gelatina de Mosaico", img: "Gelatina de mosaico.jpeg", desc: "Un divertido desfile de colores atrapado en una dulce nube de leche." },
+            { id: 2, title: "Gelatina Tres Leche", img: "Gelatina tres leche.jpeg", desc: "La suavidad clásica hecha postre, tan cremosa que se deshace en la boca." },
+            { id: 3, title: "Torta de Atolillo", img: "Torta de atolillo.jpeg", desc: "El abrazo reconfortante de la tradición en un bizcocho artesanal." },
+            { id: 4, title: "Torta de Chocolate", img: "Torta de chocolate.jpeg", desc: "La tentación oscura que nunca falla cuando el corazón pide un capricho." },
+            { id: 5, title: "Tres Leche de Chocolate", img: "Tres leche de Chocolate .jpeg", desc: "El equilibrio perfecto entre la humedad del pastel y la intensidad del cacao." },
+            { id: 6, title: "Torta de piña", img: "torta de piña.jpeg", desc: "Un bocado de sol tropical con ese toque irresistible de caramelo y fruta." }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('wassby_data')) || initialData;
+
+        function renderCatalog() {
+            const container = document.getElementById('catalogContent');
+            container.innerHTML = '';
+            
+            products.forEach(p => {
+                container.innerHTML += `
+                    <div class="product-card rounded-[2rem] overflow-hidden flex flex-col h-full">
+                        <div class="h-64 overflow-hidden relative group">
+                            <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/400x400?text=Postre+Wassby'">
+                            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-pink-600 px-4 py-1 rounded-full text-xs font-bold shadow-sm">Destacado</div>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold mb-2">${p.title}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex-grow">${p.desc}</p>
+                            <a href="https://wa.me/50585140940?text=¡Hola Abigail! Me interesa pedir: ${encodeURIComponent(p.title)}" target="_blank" class="w-full bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 py-3 rounded-2xl font-bold text-center hover:bg-pink-600 hover:text-white transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-whatsapp"></i> Consultar
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleAdmin() {
+            document.getElementById('adminPanel').classList.toggle('open');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('wassby_theme', isDark ? 'dark' : 'light');
+        }
+
+        function publishProduct() {
+            const pass = document.getElementById('adminPass').value;
+            const title = document.getElementById('newTitle').value;
+            const img = document.getElementById('newImg').value;
+            const desc = document.getElementById('newDesc').value;
+
+            if (pass !== KEY_MASTER) {
+                alert("❌ Clave incorrecta. Solo el administrador puede publicar.");
+                return;
+            }
+
+            if (!title || !img) {
+                alert("Por favor ingresa nombre e imagen.");
+                return;
+            }
+
+            const newProduct = {
+                id: Date.now(),
+                title: title,
+                img: img,
+                desc: desc || "Un nuevo postre de Wassby Sweet."
+            };
+
+            products.unshift(newProduct);
+            localStorage.setItem('wassby_data', JSON.stringify(products));
+            
+            // Reset campos
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newImg').value = '';
+            document.getElementById('newDesc').value = '';
+            document.getElementById('adminPass').value = '';
+
+            renderCatalog();
+            toggleAdmin();
+            alert("✅ ¡Postre publicado con éxito!");
+        }
+
+        function resetToOriginal() {
+            if(confirm("¿Restablecer el catálogo original? Se borrarán tus publicaciones manuales.")) {
+                localStorage.removeItem('wassby_data');
+                products = initialData;
+                renderCatalog();
+                toggleAdmin();
+            }
+        }
+
+        // Carga inicial
+        window.onload = () => {
+            if (localStorage.getItem('wassby_theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+                document.getElementById('themeSwitch').checked = true;
+            }
+            renderCatalog();
+        };
+    </script>
+</body>
+</html>
