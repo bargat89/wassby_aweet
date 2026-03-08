@@ -160,7 +160,7 @@
             { id: 2, title: "Gelatina Tres Leche", img: "Gelatina tres leche.jpeg", desc: "La suavidad clásica hecha postre, tan cremosa que se deshace en la boca." },
             { id: 3, title: "Torta de Atolillo", img: "Torta de atolillo.jpeg", desc: "El abrazo reconfortante de la tradición en un bizcocho artesanal." },
             { id: 4, title: "Torta de Chocolate", img: "Torta de chocolate.jpeg", desc: "La tentación oscura que nunca falla cuando el corazón pide un capricho." },
-            { id: 5, title: "Tres Leche de Chocolate", img: "Tres leche de Chocolate .jpeg", desc: "El equilibrio perfecto entre la humedad del pastel y la intensidad del cacao." },
+            { id: 5, title: "Tres Leche de Chocolate", img: "Tres leche de Chocolate.jpeg", desc: "El equilibrio perfecto entre la humedad del pastel y la intensidad del cacao." },
             { id: 6, title: "Torta de piña", img: "torta de piña.jpeg", desc: "Un bocado de sol tropical con ese toque irresistible de caramelo y fruta." }
         ];
 
