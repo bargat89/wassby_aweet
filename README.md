@@ -58,7 +58,6 @@
         }
         .logo-main:hover { transform: scale(1.05) rotate(3deg); }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--pink-light); }
         ::-webkit-scrollbar-thumb { background: var(--pink-main); border-radius: 10px; }
@@ -66,19 +65,16 @@
 </head>
 <body class="min-h-screen">
 
-    <!-- BOTÓN DE AJUSTES -->
     <button onclick="toggleAdmin()" class="fixed top-6 right-6 z-[110] bg-pink-600 text-white w-14 h-14 rounded-full shadow-lg hover:bg-pink-700 transition-all active:scale-90 flex items-center justify-center">
-        <i class="fa-solid fa-gear text-2xl animate-spin-slow"></i>
+        <i class="fa-solid fa-gear text-2xl"></i>
     </button>
 
-    <!-- PANEL DE ADMINISTRACIÓN -->
     <aside id="adminPanel" class="admin-sidebar fixed top-0 right-0 h-full w-full max-w-sm bg-white dark:bg-gray-800 shadow-2xl p-8 overflow-y-auto">
         <div class="flex justify-between items-center mb-10">
             <h2 class="font-pacifico text-3xl text-pink-600">Ajustes</h2>
             <button onclick="toggleAdmin()" class="text-gray-400 hover:text-pink-600"><i class="fa-solid fa-xmark text-2xl"></i></button>
         </div>
 
-        <!-- 1. CAMBIO DE TEMA -->
         <div class="mb-10">
             <h3 class="font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-circle-half-stroke"></i> Apariencia</h3>
             <div class="flex items-center justify-between p-4 bg-pink-50 dark:bg-gray-700 rounded-2xl">
@@ -90,17 +86,15 @@
             </div>
         </div>
 
-        <!-- 2. AGREGAR PRODUCTO -->
         <div class="space-y-6">
             <h3 class="font-bold flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up"></i> Publicar Nuevo</h3>
-            
             <div class="space-y-4">
                 <input type="text" id="newTitle" placeholder="Nombre del Postre" class="w-full p-4 rounded-xl border border-pink-100 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-pink-500 outline-none">
                 <input type="text" id="newImg" placeholder="URL de la Imagen (Link)" class="w-full p-4 rounded-xl border border-pink-100 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-pink-500 outline-none">
                 <textarea id="newDesc" rows="3" placeholder="Descripción breve..." class="w-full p-4 rounded-xl border border-pink-100 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-pink-500 outline-none"></textarea>
                 
                 <div class="pt-4 border-t dark:border-gray-600">
-                    <p class="text-xs text-red-500 font-bold mb-2 uppercase">Verificación de Abigail</p>
+                    <p class="text-xs text-red-500 font-bold mb-2 uppercase">Verificación</p>
                     <input type="password" id="adminPass" placeholder="Ingresa la clave maestra" class="w-full p-4 rounded-xl border-2 border-pink-200 dark:border-gray-600 dark:bg-gray-700 focus:border-pink-500 outline-none">
                 </div>
 
@@ -115,16 +109,13 @@
         </div>
     </aside>
 
-    <!-- HEADER / HERO -->
     <header class="relative pt-16 pb-12 px-6 text-center">
         <div class="logo-main inline-block w-44 h-44 rounded-full overflow-hidden mb-6 bg-white">
-            <!-- LOGO SOLICITADO -->
             <img src="logo.jpeg" alt="Logo Wassby Sweet" class="w-full h-full object-cover">
         </div>
         <h1 class="font-pacifico text-6xl md:text-8xl text-pink-600 mb-2">Wassby Sweet</h1>
         <p class="text-gray-500 dark:text-pink-200 text-lg md:text-2xl font-medium tracking-widest uppercase mb-10">Dulzura en cada bocado</p>
 
-        <!-- REDES SOCIALES -->
         <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
             <a href="https://wa.me/50585140940" target="_blank" class="flex items-center gap-3 bg-green-500 text-white px-6 py-3 rounded-full hover:scale-105 transition shadow-md">
                 <i class="fa-brands fa-whatsapp text-xl"></i> <span class="font-bold">WhatsApp</span>
@@ -138,14 +129,11 @@
         </div>
     </header>
 
-    <!-- CATÁLOGO GRID -->
     <main class="max-w-7xl mx-auto px-6 pb-24">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="catalogContent">
-            <!-- Los productos se inyectan aquí -->
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="py-12 border-t border-pink-100 dark:border-gray-800 text-center">
         <p class="font-pacifico text-2xl text-pink-500 mb-2">Wassby Sweet</p>
         <p class="text-sm text-gray-400">© 2026 • Endulzando Nicaragua con amor</p>
@@ -154,14 +142,14 @@
     <script>
         const KEY_MASTER = "07012009";
         
-        // Base de datos de imágenes iniciales (Simulación de catálogo)
+        // CORRECCIÓN DE RUTAS: Todo en minúsculas, sin espacios y sin caracteres especiales
         const initialData = [
-            { id: 1, title: "Gelatina de Mosaico", img: "Gelatina de mosaico.jpeg", desc: "Un divertido desfile de colores atrapado en una dulce nube de leche." },
-            { id: 2, title: "Gelatina Tres Leche", img: "Gelatina tres leche.jpeg", desc: "La suavidad clásica hecha postre, tan cremosa que se deshace en la boca." },
-            { id: 3, title: "Torta de Atolillo", img: "Torta de atolillo.jpeg", desc: "El abrazo reconfortante de la tradición en un bizcocho artesanal." },
-            { id: 4, title: "Torta de Chocolate", img: "Torta de chocolate.jpeg", desc: "La tentación oscura que nunca falla cuando el corazón pide un capricho." },
-            { id: 5, title: "Tres Leche de Chocolate", img: "Tres leche de Chocolate.jpeg", desc: "El equilibrio perfecto entre la humedad del pastel y la intensidad del cacao." },
-            { id: 6, title: "Torta de piña", img: "torta de piña.jpeg", desc: "Un bocado de sol tropical con ese toque irresistible de caramelo y fruta." }
+            { id: 1, title: "Gelatina de Mosaico", img: "gelatina-mosaico.jpeg", desc: "Un divertido desfile de colores atrapado en una dulce nube de leche." },
+            { id: 2, title: "Gelatina Tres Leche", img: "gelatina-tres-leche.jpeg", desc: "La suavidad clásica hecha postre, tan cremosa que se deshace en la boca." },
+            { id: 3, title: "Torta de Atolillo", img: "torta-atolillo.jpeg", desc: "El abrazo reconfortante de la tradición en un bizcocho artesanal." },
+            { id: 4, title: "Torta de Chocolate", img: "torta-chocolate.jpeg", desc: "La tentación oscura que nunca falla cuando el corazón pide un capricho." },
+            { id: 5, title: "Tres Leche de Chocolate", img: "tres-leche-chocolate.jpeg", desc: "El equilibrio perfecto entre la humedad del pastel y la intensidad del cacao." },
+            { id: 6, title: "Torta de Piña", img: "torta-pina.jpeg", desc: "Un bocado de sol tropical con ese toque irresistible de caramelo y fruta." }
         ];
 
         let products = JSON.parse(localStorage.getItem('wassby_data')) || initialData;
@@ -180,7 +168,7 @@
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="text-xl font-bold mb-2">${p.title}</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 flex-grow">${p.desc}</p>
-                            <a href="https://wa.me/50585140940?text=¡Hola Abigail! Me interesa pedir: ${encodeURIComponent(p.title)}" target="_blank" class="w-full bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 py-3 rounded-2xl font-bold text-center hover:bg-pink-600 hover:text-white transition-all flex items-center justify-center gap-2">
+                            <a href="https://wa.me/50585140940?text=Hola! Me interesa pedir: ${encodeURIComponent(p.title)}" target="_blank" class="w-full bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 py-3 rounded-2xl font-bold text-center hover:bg-pink-600 hover:text-white transition-all flex items-center justify-center gap-2">
                                 <i class="fa-brands fa-whatsapp"></i> Consultar
                             </a>
                         </div>
@@ -206,7 +194,7 @@
             const desc = document.getElementById('newDesc').value;
 
             if (pass !== KEY_MASTER) {
-                alert("❌ Clave incorrecta. Solo el administrador puede publicar.");
+                alert("❌ Clave incorrecta.");
                 return;
             }
 
@@ -225,7 +213,6 @@
             products.unshift(newProduct);
             localStorage.setItem('wassby_data', JSON.stringify(products));
             
-            // Reset campos
             document.getElementById('newTitle').value = '';
             document.getElementById('newImg').value = '';
             document.getElementById('newDesc').value = '';
@@ -233,11 +220,11 @@
 
             renderCatalog();
             toggleAdmin();
-            alert("✅ ¡Postre publicado con éxito!");
+            alert("✅ ¡Postre publicado!");
         }
 
         function resetToOriginal() {
-            if(confirm("¿Restablecer el catálogo original? Se borrarán tus publicaciones manuales.")) {
+            if(confirm("¿Restablecer el catálogo original?")) {
                 localStorage.removeItem('wassby_data');
                 products = initialData;
                 renderCatalog();
@@ -245,7 +232,6 @@
             }
         }
 
-        // Carga inicial
         window.onload = () => {
             if (localStorage.getItem('wassby_theme') === 'dark') {
                 document.body.classList.add('dark-theme');
